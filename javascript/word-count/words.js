@@ -2,7 +2,7 @@
 
 function Words(input) {
 
-  var words   = input.match(/\w+/gi),
+  var words       = input.match(/\w+/gi),
       countWords  = {};
   
   words.reduce(this.countAll, countWords);
@@ -12,11 +12,12 @@ function Words(input) {
 
 Words.prototype.countAll = function(countWords, word) {
   var word = word.toLowerCase();
-
-  if( undefined === countWords[word]) {
+  
+  if( !(word in countWords) ) {
     countWords[word] = 0;
   }
-  countWords[word] = countWords[word] + 1;
+  countWords[word] = countWords[word] + 1;  
+  
 
   return countWords;
 }
