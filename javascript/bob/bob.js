@@ -1,17 +1,29 @@
 module.exports = function Bob() {
   'use strict';
 
+  function isEmpty(string) {
+    return "" === string;
+  }
+
+  function isYelling(string) {
+    return string === string.toUpperCase();
+  }
+
+  function isQuestion(string) {
+    return "?" === string.substr(-1);
+  }
+
   this.hey = function(sentence) {
 
-    if (sentence === "") {
+    if (isEmpty(sentence)) {
       return "Fine. Be that way!";
     }
 
-    if (sentence.toUpperCase() === sentence) {
+    if (isYelling(sentence)) {
       return "Woah, chill out!";
     }
 
-    if (sentence.substr(-1) === "?") {
+    if (isQuestion(sentence)) {
       return "Sure.";
     }
 
