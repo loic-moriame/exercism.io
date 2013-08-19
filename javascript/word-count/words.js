@@ -2,19 +2,23 @@
 
 function Words(input) {
 
-  var words = input.match(/\b[a-z0-9]+\b/gi),
-      counts = {};
+  var words   = input.match(/\w+/gi),
+      countWords  = {};
   
-  for(var i=0; i<words.length; i++) {
-    var currentWord = words[i].toLowerCase();
-    
-    if( undefined === counts[currentWord]) {
-      counts[currentWord] = 0;
-    }
-    counts[currentWord] += 1;
-  }
+  words.reduce(this.countAll, countWords);
+  
+  this.count = countWords;
+}
 
-  this.count = counts;
+Words.prototype.countAll = function(countWords, word) {
+  var word = word.toLowerCase();
+
+  if( undefined === countWords[word]) {
+    countWords[word] = 0;
+  }
+  countWords[word] = countWords[word] + 1;
+
+  return countWords;
 }
 
 module.exports = Words;
