@@ -1,4 +1,4 @@
-module.exports = function Bob() {
+function Bob() {
   'use strict';
 
   function isEmpty(string) {
@@ -30,3 +30,5 @@ module.exports = function Bob() {
     return "Whatever.";
   }
 };
+
+module.exports = Bob;
