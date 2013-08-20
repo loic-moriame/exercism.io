@@ -6,36 +6,64 @@ function Anagram(word) {
 
 
 Anagram.prototype.match = function(words) {
-  var matches = [];
-
-  for(var i=0; i<words.length; i++) {
-    var currentWord = words[i];
-    
-    if (currentWord.isAnagrameOf(this.word)) {
-      matches.push(currentWord);
-    };
-  }
-
-  return matches;
+  
+  words.forEach(this.checkWords, this.word);
+  words.cleanEmpty();
+  
+  return words;
 };
 
-String.prototype.isAnagrameOf = function(word) {
-  //console.log(word, this);
-
-  if(word.length !== this.length) {
-    return false;
+Anagram.prototype.checkWords = function(word, index, array) {
+  if(!word.isAnagrameOf(this.toString())) {
+    array[index] = null;
   }
+}
 
+String.prototype.isAnagrameOf = function(word) {
   var wordLetters     = word.toUpperCase().split('').sort(),
       anagramLetters  = this.toUpperCase().split('').sort();
 
-  for(var i=0; i<wordLetters.length; i++) {
-    if(wordLetters[i] !== anagramLetters[i]) {
+  return wordLetters.isEqualTo(anagramLetters);
+};
+
+Array.prototype.isEqualTo = function(array) {
+  if(!array) {
+    return false;
+  }
+
+  if(!(array instanceof Array)) {
+    return false;
+  }
+
+  if(this.length != array.length) {
+    return false;
+  }
+  
+  var i = this.length;
+  while (i--) {
+    if (this[i] !== array[i]) {
       return false;
     }
   }
 
   return true;
-};
+}
+
+Array.prototype.cleanEmpty = function() {
+  this.unset(null, true);
+  this.unset(undefined, true);
+
+}
+
+Array.prototype.unset = function(value, global) {
+  var index   = this.indexOf(value),
+      global  = global || false;
+
+  while(index > -1) {
+    this.splice(index, 1);
+    index = global ? this.indexOf(value) : -1;
+  }
+}
+
 
 module.exports = Anagram;
