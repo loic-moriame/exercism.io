@@ -18,7 +18,6 @@ Words.prototype.countAll = function(countWords, word) {
   }
   countWords[word] = countWords[word] + 1;  
   
-
   return countWords;
 }
 
