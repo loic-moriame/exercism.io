@@ -26,8 +26,8 @@ String.prototype.isAnagrameOf = function(word) {
     return false;
   }
 
-  var wordLetters     = word.split('').sort(),
-      anagramLetters  = this.split('').sort();
+  var wordLetters     = word.toUpperCase().split('').sort(),
+      anagramLetters  = this.toUpperCase().split('').sort();
 
   for(var i=0; i<wordLetters.length; i++) {
     if(wordLetters[i] !== anagramLetters[i]) {
