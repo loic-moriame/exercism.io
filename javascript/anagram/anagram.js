@@ -1,69 +1,44 @@
-'use strict';
+(function() {
+  'use strict';
 
-function Anagram(word) {
-  this.word = word;
-}
-
-
-Anagram.prototype.match = function(words) {
-  
-  words.forEach(this.checkWords, this.word);
-  words.cleanEmpty();
-  
-  return words;
-};
-
-Anagram.prototype.checkWords = function(word, index, array) {
-  if(!word.isAnagrameOf(this.toString())) {
-    array[index] = null;
-  }
-}
-
-String.prototype.isAnagrameOf = function(word) {
-  var wordLetters     = word.toUpperCase().split('').sort(),
-      anagramLetters  = this.toUpperCase().split('').sort();
-
-  return wordLetters.isEqualTo(anagramLetters);
-};
-
-Array.prototype.isEqualTo = function(array) {
-  if(!array) {
-    return false;
+  function Anagram(word) {
+    this.word = word;
   }
 
-  if(!(array instanceof Array)) {
-    return false;
-  }
+  Anagram.prototype.match = function(words) {
+    words.forEach(this.checkWords, this.word);
+    words.removeNullValues();
+    
+    return words;
+  };
 
-  if(this.length != array.length) {
-    return false;
-  }
-  
-  var i = this.length;
-  while (i--) {
-    if (this[i] !== array[i]) {
-      return false;
+  Anagram.prototype.checkWords = function(word, index, array) {
+    if(!word.isAnagrameOf(this.toString())) {
+      array[index] = null;
     }
   }
 
-  return true;
-}
+  String.prototype.isAnagrameOf = function(word) {
+    var word1 = this.toUpperCase().split('').sort().join(''),
+        word2 = word.toUpperCase().split('').sort().join('');
 
-Array.prototype.cleanEmpty = function() {
-  this.unset(null, true);
-  this.unset(undefined, true);
+    return word1 === word2;
+  };
 
-}
-
-Array.prototype.unset = function(value, global) {
-  var index   = this.indexOf(value),
-      global  = global || false;
-
-  while(index > -1) {
-    this.splice(index, 1);
-    index = global ? this.indexOf(value) : -1;
+  Array.prototype.removeNullValues = function() {
+    this.unset(null, true);
   }
-}
 
+  Array.prototype.unset = function(value, global) {
+    var index   = this.indexOf(value),
+        global  = global || false;
 
-module.exports = Anagram;
+    while(index > -1) {
+      this.splice(index, 1);
+      index = global ? this.indexOf(value) : -1;
+    }
+  }
+
+  module.exports = Anagram;
+
+})();
