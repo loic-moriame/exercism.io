@@ -7,7 +7,7 @@
 
   Anagram.prototype.match = function(words) {
     words.forEach(this.checkWords, this.word);
-    words.unset(null, true);
+    words.clearEmptyValue();
     
     return words;
   };
@@ -25,13 +25,13 @@
     return word1 === word2;
   };
 
-  Array.prototype.unset = function(value, global) {
-    var index   = this.indexOf(value),
-        global  = global || false;
+  Array.prototype.clearEmptyValue = function() {
+    var value   = null,
+        index   = this.indexOf(value);
 
     while(index > -1) {
       this.splice(index, 1);
-      index = global ? this.indexOf(value) : -1;
+      index = this.indexOf(value);
     }
   }
 
