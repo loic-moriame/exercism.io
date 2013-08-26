@@ -6,26 +6,16 @@
   }
 
   Anagram.prototype.match = function(words) {
-    words.forEach(this.checkWords, this.word);
-    return words.filter(this.filterEmptyValue);
+    return words.filter(this.filterAnagrams, this);
   };
 
-  Anagram.prototype.checkWords = function(word, index, array) {
-    if(!word.isAnagrameOf(this.toString())) {
-      array[index] = null;
-    }
+  Anagram.prototype.filterAnagrams = function(word) {
+    return this.word.sortLetters() === word.sortLetters();
   }
 
-  Anagram.prototype.filterEmptyValue = function(word) {
-    return word !== null;
+  String.prototype.sortLetters = function() {
+    return this.toUpperCase().split('').sort().join('');
   }
-
-  String.prototype.isAnagrameOf = function(word) {
-    var word1 = this.toUpperCase().split('').sort().join(''),
-        word2 = word.toUpperCase().split('').sort().join('');
-
-    return word1 === word2;
-  };
 
   module.exports = Anagram;
 
