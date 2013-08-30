@@ -14,6 +14,10 @@
   };
 
   Anagram.prototype.filterAnagrams = function(word) {
+    if(this.word === word) {
+      return false;
+    }
+    
     return sortLetters(this.word) === sortLetters(word);
   }
 
